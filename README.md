@@ -614,3 +614,75 @@ alert("welcome to js program");
 
   console.log(numb1);
   ```
+
+## 2.1 Document Object Model (DOM)
+
+- The document object represents your web page.
+- If you want to access any element in an HTML page, you always start with accessing the document object.
+- Finding HTML Elements
+
+  | Method | Description |
+  | ---- | ---- |
+  | document.getElementById(id) | Find an element by element id |
+  | document.getElementsByTagName(name) | Find elements by tag name |
+  | document.getElementsByClassName(name) | Find elements by class name |
+  | document.querySelector(name) | find element by id class tag name |
+  | document.querySelectorAll() | find element by id class tag name |
+
+  - The `querySelectorAll()` method returns a static NodeList.
+
+- Adding and Deleting Elements
+
+  | Method | Description |
+  | ---- | ---- |
+  | document.createElement(element) | Create an HTML element |
+  | element.removeChild(element) | Remove an HTML element |
+  | element.appendChild(element) | Add an HTML element |
+  | element.insertBefore(new, existing) | Add an HTML element |
+  | document.write(text) | 	Write into the HTML output stream |
+
+  - Add the html file
+    ```HTML
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Find, create, add, remove html elements</title>
+    </head>
+        <body>
+            <div class="my-div">
+                <h1 class="heading1">This is heading 1</h1>
+                <h1 class="heading2">This is heading 2</h1>
+                <h1 class="heading3">This is heading 3</h1>
+                <h1 class="heading4">This is heading 4</h1>
+            </div>
+        </body>
+    </html>
+    ```
+
+  - Add the javascript file
+    
+    ```JavaScript
+    // Create a new html element
+    let heading5 = document.createElement("h1");
+    let text = document.createTextNode("This is hesding 5");
+    heading5.appendChild(text);
+
+    let myDiv = document.querySelector(".my-div");
+    myDiv.appendChild(heading5);
+
+    // Remove a html element
+    let heading3 = myDiv.children[2];
+    myDiv.removeChild(heading3);
+
+    // Add a new html element in first
+    let heading0 = document.createElement("h1");
+    let text1 = document.createTextNode("This is heading 0");
+    heading0.appendChild(text1);
+
+    let heading1 = myDiv.children[0];
+    myDiv.insertBefore(heading0,heading1);
+    ```
+
