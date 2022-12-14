@@ -685,4 +685,200 @@ alert("welcome to js program");
     let heading1 = myDiv.children[0];
     myDiv.insertBefore(heading0,heading1);
     ```
+  
 
+
+
+## 3.1 LocalStorage
+
+- The localStorage object allows you to save key/value pairs in the browser.
+- The localStorage object stores data with no expiration date.
+- The data is not deleted when the browser is closed, and are available for future sessions.
+- localStorage allow us to store, read, update & delete data.
+
+1. setItem(key, value) - to store data
+
+    ```JavaScript 
+    localStorage.setItem("userName", "Maruf Akash");
+    localStorage.setItem("userId", "19EEE047");
+    localStorage.setItem("userEmail", "marufakash392@gmail.com");
+    ```
+
+2. getItem(key) - to get data
+
+    ```JavaScript
+    const userName = localStorage.getItem("userName");
+    const userEmail = localStorage.getItem("userEmail");
+    console.log(`User-name: ${userName}, User-email: ${userEmail}`);
+    ```
+
+3. removeItem(key) - to remove data
+
+    ```JavaScript
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userId");
+    ```
+
+4. Array store & read
+
+    ```JavaScript
+    const countries = ["Bangladesh","India","Pakistan","Japan","Sri Lanka"];
+    localStorage.setItem("countries",JSON.stringify(countries));
+    const countryList = JSON.parse(localStorage.getItem('countries'));
+    console.log(countryList);
+    ```
+5. Object store & read
+
+    ```JavaScript
+    const studentInfo = {
+      name: "Maruf Akash",
+      email: "marufakash392@gmail.com",
+      year: 2019,
+      language: ["Bangla","English","Hindi"]
+    }
+
+    localStorage.setItem("studentInfo", JSON.stringify(studentInfo));
+    const info = JSON.parse(localStorage.getItem("studentInfo"));
+    console.log(info);
+    ```
+## 3.2 API Calling
+
+- 4 ways to call api - XMLHttpRequest, fetch, axios, jquery
+
+1. XMLHttpRequest
+
+    ```JavaScript
+    // event - onload(), onerror()
+    // property - response, responseText, responseType, responseURL, status, statusText
+    // function - open(), send(), setRequestHeader()
+    // method - GET, POST, PUT, DELETE, PATCH
+
+    const makeRequest = (method, url,data) =>{
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.onload = () =>{
+            let data = xhr.response;
+            console.log(xhr.status);
+            console.log(xhr.statusText);
+            console.log(xhr.responseText);
+            console.log(xhr.responseURL);
+            console.log(JSON.parse(data));
+        }
+
+        xhr.onerror = () =>{
+            console.log("Error is here");
+        }
+
+        xhr.send(JSON.stringify(data));
+    }
+
+    const getData = () => {
+        makeRequest("GET", 'https://jsonplaceholder.typicode.com/posts');
+    }
+    //getData();
+
+    const sendData = () => {
+        makeRequest("POST", 'https://jsonplaceholder.typicode.com/posts', {
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        });
+    }
+    //sendData();
+
+    const updateData = () => {
+        makeRequest("PUT", 'https://jsonplaceholder.typicode.com/posts/1', {
+            id: 1,
+            title: 'fooma',
+            body: 'barma',
+            userId: 1,
+        });
+    }
+    //updateData();
+
+    const updateSingleData = () => {
+        makeRequest("PATCH", 'https://jsonplaceholder.typicode.com/posts/1', {
+            title: 'This is changed',
+        });
+    }
+    updateSingleData();
+
+    const deleteData = () => {
+        makeRequest("DELETE", 'https://jsonplaceholder.typicode.com/posts/1', {
+        });
+    }
+    ```
+
+2. fetch
+ 
+    - fetch() has replaced XMLHttpRequest
+    - fetch() - global method for making HTTP Request
+    - 2 ways to call - then, async await
+
+      ```JavaScript
+      // method for making HTTP Request
+      const makeRequest = async (url, config) => {
+        const res = await fetch(url, config);
+        if (!res.ok) {
+          throw Error(`Error : ${res.status}`);
+        }
+        const data = await res.json();
+        return data;
+      };
+        
+      const deleteData = () => {
+        makeRequest("https://jsonplaceholder.typicode.com/posts/1", {
+          method: "DELETE",
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+      };
+        
+      deleteData();
+
+      const updateData = () => {
+        makeRequest("https://jsonplaceholder.typicode.com/posts/1", {
+          method: "PATCH",
+          body: JSON.stringify({
+            title: "foomaraarrara",
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+        .then((res) => console.log(res))
+          catch((err) => console.log(err));
+      };
+      
+      updateData();
+      
+      const sendData = () => {
+        makeRequest("https://jsonplaceholder.typicode.com/posts", {
+          method: "POST",
+          body: JSON.stringify({
+            title: "foo",
+            body: "bar",
+            userId: 1,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      };
+      
+      sendData();
+
+      const getData = () => {
+        makeRequest("https://jsonplaceholder.typicode.com/posts")
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      };
+      
+      getData();
+      ```
