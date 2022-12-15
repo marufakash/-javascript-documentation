@@ -685,8 +685,72 @@ alert("welcome to js program");
     let heading1 = myDiv.children[0];
     myDiv.insertBefore(heading0,heading1);
     ```
-  
 
+## 2.2 Browser Object Model (BOM)
+
+- The BOM allows JavaScript to “interact with” the browser.
+
+### 1.1 location object
+
+- `window.location.href` returns the href (URL) of the current page.
+- `window.location.hostname` returns the domain name of the web host.
+- `window.location.pathname` returns the path and filename of the current page.
+- `window.location.protocol` returns the web protocol used (http: or https:).
+- `window.location.assign()` loads a new document.
+- `window.location.port` return the current page port.
+
+### 1.2 Timing Events
+
+- `setTimeout(function, milliseconds)` sets a timer which executes a function or specified piece of code once the timer expires.
+- `setInterval(function, milliseconds)` set a delay for functions that are executed again and again, such as animations.
+- create a clock using timing events
+
+  ```HTML
+  <!-- HTML file -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <button id="btn">Click here</button>
+      <p id="para"></p>
+
+      <script src="index1.js"></script>
+  </body>
+  </html>
+  ```
+
+  ```JavaScript
+  // Add the JavaScript file
+  let message = document.getElementById("para");
+
+  (function startClock(){
+      let date = new Date();
+      let hours = date.getHours();
+      let minites = date.getMinutes();
+      let seconds = date.getSeconds();
+
+      minites = formatTime(minites);
+      hours = formatTime(hours);
+      seconds = formatTime(seconds);
+
+      let time = hours + ":" + minites + ":" + seconds;
+      message.textContent = time;
+
+      setInterval(startClock, 1000);
+  })();
+
+  function formatTime(value){
+      if(value < 10){
+          value = "0" + value;
+      }
+      return value;
+  }
+  ```
 
 
 ## 3.1 LocalStorage
